@@ -12,6 +12,7 @@ LIB_NAME  := rawcompute.a
 
 SRC_DIR   := src
 TEST_DIR  := tests
+INC_DIR   := include
 
 SRC_FILES := $(wildcard $(SRC_DIR)/r_*.c)
 SRC_OBJS  := $(SRC_FILES:.c=.o)
@@ -20,7 +21,9 @@ TEST_SRCS := $(wildcard $(TEST_DIR)/test_*.c)
 TEST_OBJS := $(TEST_SRCS:.c=.o)
 TESTS     := $(TEST_SRCS:.c=)
 
-.PHONY: all test valgrind clean
+HEADERS   := $(wildcard $(INC_DIR)/*.h)
+
+.PHONY: all test valgrind clean format
 
 all: $(LIB_NAME) test
 
@@ -48,6 +51,10 @@ valgrind: test
 		echo "---- VALGRIND $$exe ----"; \
 		$(VALGRIND) "$$exe" || exit $$?; \
 	done
+
+format:
+	@echo "---- Formatting files with clang-format (Microsoft style) ----"
+	clang-format -i --style=Microsoft $(SRC_FILES) $(TEST_SRCS) $(HEADERS)
 
 clean:
 	rm -f $(TESTS) $(TEST_OBJS) $(SRC_OBJS) $(LIB_NAME)
