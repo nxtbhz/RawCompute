@@ -28,6 +28,8 @@ RVector *r_mat_vec_mul(const RNONNULL RMatrix *matrix, const RNONNULL RVector *v
     }
 
     RVector *result = malloc(sizeof(RVector));
+    result->size = matrix->rows;
+    result->data = malloc(sizeof(float) * result->size);
 
     for (size_t i = 0; i < matrix->rows; i++)
     {
