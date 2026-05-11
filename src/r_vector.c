@@ -49,7 +49,7 @@ float r_vec_dot(const RNONNULL RVector *vector1, const RNONNULL RVector *vector2
     if (vector1->size != vector2->size)
     {
         printf("[ERROR]: The vectors should have the same size\n");
-        exit(1);
+        return 0.0f;
     }
 
     float result = 0.0f;
@@ -61,7 +61,7 @@ float r_vec_dot(const RNONNULL RVector *vector1, const RNONNULL RVector *vector2
     return result;
 }
 
-void r_add_bias(const RNONNULL RVector *vector, float bias)
+void r_add_bias(RNONNULL RVector *vector, float bias)
 {
     for (size_t i = 0; i < vector->size; i++)
     {
