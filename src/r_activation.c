@@ -1,6 +1,6 @@
-#include <rc/r_types.h>
-#include <rc/r_matrix.h>
 #include <rc/r_activation.h>
+#include <rc/r_matrix.h>
+#include <rc/r_types.h>
 
 RMatrix *r_activation_relu(RNONNULL RMatrix *matrix)
 {
@@ -34,7 +34,7 @@ RMatrix *r_activation_softmax(RNONNULL RMatrix *matrix)
         for (size_t k = 0; k < matrix->cols; k++)
         {
             result->data[RMatrixIDX(i, k, matrix->cols)] = matrix->data[RMatrixIDX(i, k, matrix->cols)] - hi;
-            result->data[RMatrixIDX(i, k, matrix->cols)] = exp(result->data[RMatrixIDX(i, k, result->cols)]);
+            result->data[RMatrixIDX(i, k, matrix->cols)] = exp(result->data[RMatrixIDX(i, k, matrix->cols)]);
             total += result->data[RMatrixIDX(i, k, matrix->cols)];
         }
 
