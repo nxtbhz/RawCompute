@@ -1,3 +1,6 @@
+#ifndef RC_R_TYPES_H
+#define RC_R_TYPES_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
@@ -23,3 +26,4 @@
 
 #define EPSILON 1e-7f
 
+#endif

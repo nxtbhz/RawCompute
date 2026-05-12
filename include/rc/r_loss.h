@@ -1,3 +1,6 @@
+#ifndef RC_R_LOSS_H
+#define RC_R_LOSS_H
+
 #include <rc/r_types.h>
 #include <rc/r_matrix.h>
 
@@ -8,3 +11,5 @@ float r_mse_loss(const RNONNULL RMatrix *pred, const RNONNULL RMatrix *real);
 float r_mae_loss(const RNONNULL RMatrix *pred, const RNONNULL RMatrix *real);
 float r_cat_focal_loss(const RNONNULL RMatrix *pred, const RNONNULL RMatrix *real, float gamma);
 float r_bin_focal_loss(const RNONNULL RMatrix *pred, const RNONNULL RMatrix *real, float gamma, float alpha);
+
+#endif

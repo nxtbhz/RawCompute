@@ -1,4 +1,5 @@
-#pragma once
+#ifndef RC_R_VECTOR_H
+#define RC_R_VECTOR_H
 
 #include <rc/r_types.h>
 #include <rc/r_matrix.h>

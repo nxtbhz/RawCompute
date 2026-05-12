@@ -1,4 +1,5 @@
-#pragma once
+#ifndef RC_R_MATRIX_H
+#define RC_R_MATRIX_H
 
 #include <rc/r_types.h>
 
@@ -15,3 +16,5 @@ void r_free_matrix(RNONNULL RMatrix *matrix);
 RMatrix *r_mat_mul(const RNONNULL RMatrix *mat1, const RNONNULL RMatrix *mat2);
 RMatrix *r_mat_transpose(const RNONNULL RMatrix *matrix);
 void r_print_matrix(const RNONNULL RMatrix *m, const RNONNULL char *name);
+
+#endif
