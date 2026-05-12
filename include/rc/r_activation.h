@@ -1,3 +1,5 @@
+#pragma once
+
 #include <rc/r_types.h>
 #include <rc/r_matrix.h>
 

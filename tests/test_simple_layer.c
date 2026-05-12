@@ -1,4 +1,4 @@
-#include "common.h"
+#include <rc/rc.h>
 
 int main(void)
 {

@@ -1,5 +1,4 @@
 #include <rc/r_matrix.h>
-#include <rc/r_types.h>
 
 RMatrix *r_create_matrix(size_t rows, size_t cols)
 {

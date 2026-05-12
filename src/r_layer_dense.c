@@ -1,5 +1,4 @@
 #include <rc/r_layer_dense.h>
-#include <rc/r_types.h>
 
 RLayerDense *r_create_layer(size_t n_inputs, size_t n_neurons)
 {
