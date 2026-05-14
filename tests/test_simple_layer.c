@@ -42,15 +42,14 @@ static void assert_float_close(float actual, float expected, float abs_tol, floa
 
     if (diff > tol)
     {
-        fprintf(stderr, "ASSERT_FLOAT_CLOSE failed: %s (actual=%.8f expected=%.8f diff=%.8f tol=%.8f)\n", msg,
-                actual, expected, diff, tol);
+        fprintf(stderr, "ASSERT_FLOAT_CLOSE failed: %s (actual=%.8f expected=%.8f diff=%.8f tol=%.8f)\n", msg, actual,
+                expected, diff, tol);
     }
 
     assert(diff <= tol);
 }
 
-static void assert_matrix_close(const RMatrix *actual, const float *expected, size_t rows, size_t cols,
-                                const char *msg)
+static void assert_matrix_close(const RMatrix *actual, const float *expected, size_t rows, size_t cols, const char *msg)
 {
     assert(actual->rows == rows && actual->cols == cols && "matrix shape mismatch");
 
@@ -99,8 +98,7 @@ static void test_layer_forward_single_neuron(void)
 static void test_layer_forward_single_input_three_neurons(void)
 {
     const float input_vals[] = {1.0f, 2.0f, 3.0f, 2.5f};
-    const float weight_vals[] = {0.2f, 0.8f, -0.5f, 1.0f, 0.5f, -0.91f, 0.26f, -0.5f,
-                                 -0.26f, -0.27f, 0.17f, 0.87f};
+    const float weight_vals[] = {0.2f, 0.8f, -0.5f, 1.0f, 0.5f, -0.91f, 0.26f, -0.5f, -0.26f, -0.27f, 0.17f, 0.87f};
     const float bias_vals[] = {2.0f, 3.0f, 0.5f};
 
     const float expected[] = {4.8f, 1.21f, 2.385f};
@@ -119,8 +117,7 @@ static void test_layer_forward_single_input_three_neurons(void)
 static void test_layer_forward_batch_matches_expected(void)
 {
     const float batch_vals[] = {1.0f, 2.0f, 3.0f, 2.5f, 2.0f, 5.0f, -1.0f, 2.0f, 3.0f, 1.0f, 4.0f, 0.5f};
-    const float weight_vals[] = {0.2f, 0.8f, -0.5f, 1.0f, 0.5f, -0.91f, 0.26f, -0.5f,
-                                 -0.26f, -0.27f, 0.17f, 0.87f};
+    const float weight_vals[] = {0.2f, 0.8f, -0.5f, 1.0f, 0.5f, -0.91f, 0.26f, -0.5f, -0.26f, -0.27f, 0.17f, 0.87f};
     const float bias_vals[] = {2.0f, 3.0f, 0.5f};
 
     const float expected[] = {4.8f, 1.21f, 2.385f, 8.9f, -1.81f, 0.2f, 1.9f, 4.38f, 0.565f};

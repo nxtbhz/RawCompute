@@ -37,9 +37,8 @@ static void set_layer_biases(RLayerDense *layer, const float *values)
     }
 }
 
-static void compute_dense_expected(const float *inputs, size_t batch, size_t n_inputs,
-                                   const float *weights, size_t n_neurons,
-                                   const float *biases, float *out)
+static void compute_dense_expected(const float *inputs, size_t batch, size_t n_inputs, const float *weights,
+                                   size_t n_neurons, const float *biases, float *out)
 {
     for (size_t i = 0; i < batch; i++)
     {
@@ -68,17 +67,15 @@ static void assert_float_close(float actual, float expected, float abs_tol, floa
 
     if (diff > tol)
     {
-        fprintf(stderr,
-                "ASSERT_FLOAT_CLOSE failed: %s (actual=%.8f expected=%.8f diff=%.8f tol=%.8f)\n",
-                msg, actual, expected, diff, tol);
+        fprintf(stderr, "ASSERT_FLOAT_CLOSE failed: %s (actual=%.8f expected=%.8f diff=%.8f tol=%.8f)\n", msg, actual,
+                expected, diff, tol);
     }
 
     assert(diff <= tol);
 }
 
-static void assert_matrix_close(const RMatrix *actual, const float *expected,
-                                size_t rows, size_t cols, float abs_tol, float rel_tol,
-                                const char *label)
+static void assert_matrix_close(const RMatrix *actual, const float *expected, size_t rows, size_t cols, float abs_tol,
+                                float rel_tol, const char *label)
 {
     assert(actual != NULL && "matrix should not be NULL");
     assert(actual->rows == rows && actual->cols == cols && "matrix dimensions mismatch");
@@ -110,10 +107,8 @@ static void test_create_layer_dimensions(void)
 
 static void test_layer_forward_basic(void)
 {
-    const float input_vals[] = {1.0f, 2.0f, 3.0f,
-                                4.0f, 5.0f, 6.0f};
-    const float weight_vals[] = {0.2f, 0.4f, -0.5f,
-                                 1.0f, -1.0f, 0.5f};
+    const float input_vals[] = {1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f};
+    const float weight_vals[] = {0.2f, 0.4f, -0.5f, 1.0f, -1.0f, 0.5f};
     const float bias_vals[] = {0.1f, -0.2f};
 
     RMatrix *input = make_matrix(2, 3, input_vals);
@@ -156,8 +151,7 @@ static void test_layer_forward_bias_only_zero_inputs(void)
 
 static void test_layer_forward_zero_batch_size(void)
 {
-    const float weight_vals[] = {0.1f, 0.2f, 0.3f,
-                                 -0.4f, 0.5f, -0.6f};
+    const float weight_vals[] = {0.1f, 0.2f, 0.3f, -0.4f, 0.5f, -0.6f};
     const float bias_vals[] = {0.7f, -0.8f};
 
     RMatrix *input = r_create_matrix(0, 3);
@@ -197,16 +191,12 @@ static void test_layer_forward_nan_propagation(void)
 
 static void test_multi_layer_forward_matches_manual(void)
 {
-    const float input_vals[] = {1.0f, -1.0f,
-                                0.5f, 2.0f};
+    const float input_vals[] = {1.0f, -1.0f, 0.5f, 2.0f};
 
-    const float w1[] = {0.1f, 0.2f,
-                        -0.3f, 0.4f,
-                        0.5f, -0.6f};
+    const float w1[] = {0.1f, 0.2f, -0.3f, 0.4f, 0.5f, -0.6f};
     const float b1[] = {0.01f, 0.02f, -0.03f};
 
-    const float w2[] = {0.7f, -0.8f, 0.9f,
-                        -1.0f, 0.5f, 0.3f};
+    const float w2[] = {0.7f, -0.8f, 0.9f, -1.0f, 0.5f, 0.3f};
     const float b2[] = {0.1f, -0.2f};
 
     const float w3[] = {0.25f, -0.75f};

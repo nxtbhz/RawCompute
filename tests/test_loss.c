@@ -27,9 +27,8 @@ static void assert_float_close(float actual, float expected, float abs_tol, floa
 
     if (diff > tol)
     {
-        fprintf(stderr,
-                "ASSERT_FLOAT_CLOSE failed: %s (actual=%.8f expected=%.8f diff=%.8f tol=%.8f)\n",
-                msg, actual, expected, diff, tol);
+        fprintf(stderr, "ASSERT_FLOAT_CLOSE failed: %s (actual=%.8f expected=%.8f diff=%.8f tol=%.8f)\n", msg, actual,
+                expected, diff, tol);
     }
 
     assert(diff <= tol);
@@ -113,8 +112,8 @@ static void test_bin_cross_entropy_basic(void)
     RMatrix *real = make_matrix(2, 2, real_vals);
 
     const float expected =
-        -(logf(0.9f + EPSILON) + logf(1.0f - 0.1f + EPSILON) +
-          logf(1.0f - 0.2f + EPSILON) + logf(0.8f + EPSILON)) / 4.0f;
+        -(logf(0.9f + EPSILON) + logf(1.0f - 0.1f + EPSILON) + logf(1.0f - 0.2f + EPSILON) + logf(0.8f + EPSILON)) /
+        4.0f;
 
     const float actual = r_bin_cross_entropy(pred, real);
 
