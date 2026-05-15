@@ -20,7 +20,7 @@ This project is perfect for learning how neural network computations work at the
 - ✅ Dense layers with forward propagation
 - ✅ Activation functions
 - ✅ Loss functions
-- ⏳ Optimization
+- ✅ Optimization
 - ⏳ Backpropagation
 - ⏳ Additional layer types
 
