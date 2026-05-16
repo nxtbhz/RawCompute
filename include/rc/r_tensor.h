@@ -20,6 +20,8 @@ typedef struct r_tensor_t
 	size_t size;
 } RTensorND;
 
-
+RTensorND *r_create_tensor(size_t n_dim, const RNONNULL size_t *shape);
+RTensorND *r_create_tensor_from_data(size_t n_dim, const RNONNULL size_t *shape, RNONNULL float *data);
+void r_free_tensor(RNONNULL RTensorND *tensor);
 
 #endif
