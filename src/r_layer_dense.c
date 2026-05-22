@@ -45,15 +45,26 @@ void r_free_layer(RNONNULL RLayerDense *layer)
  */
 RMatrix *r_layer_forward(const RNONNULL RLayerDense *layer, const RNONNULL RMatrix *inputs)
 {
+    if (inputs->cols != layer->weights->cols)
+    {
+        printf("[ERROR]: r_layer_forward requires inputs->cols == layer->weights->cols\n");
+        return NULL;
+    }
+    if (layer->biases->size != layer->weights->rows)
+    {
+        printf("[ERROR]: r_layer_forward requires biases->size == number of neurons\n");
+        return NULL;
+    }
+
     RMatrix *transposed_weights = r_mat_transpose(layer->weights);
     RMatrix *result = r_mat_mul(inputs, transposed_weights);
 
     r_free_matrix(transposed_weights);
+    if (result == NULL)
+        return NULL;
 
     for (size_t i = 0; i < result->rows; i++)
     {
-        // seg fault?
-        // r_add_bias(result->data, layer->biases->data[i]);
         for (size_t j = 0; j < result->cols; j++)
         {
             result->data[RMatrixIDX(i, j, result->cols)] += layer->biases->data[j];

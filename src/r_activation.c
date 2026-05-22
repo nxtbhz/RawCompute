@@ -78,6 +78,9 @@ RMatrix *r_activation_gelu(RNONNULL RMatrix *matrix)
 RMatrix *r_activation_softmax(RNONNULL RMatrix *matrix)
 {
     RMatrix *result = r_create_matrix(matrix->rows, matrix->cols);
+    if (matrix->rows == 0 || matrix->cols == 0)
+        return result;
+
     for (size_t i = 0; i < matrix->rows; i++)
     {
         float total = 0.0f;

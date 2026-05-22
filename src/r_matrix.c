@@ -47,6 +47,12 @@ void r_free_matrix(RNONNULL RMatrix *matrix)
  */
 RMatrix *r_mat_mul(const RNONNULL RMatrix *mat1, const RNONNULL RMatrix *mat2)
 {
+    if (mat1->cols != mat2->rows)
+    {
+        printf("[ERROR]: r_mat_mul requires mat1->cols == mat2->rows\n");
+        return NULL;
+    }
+
     RMatrix *result = r_create_matrix(mat1->rows, mat2->cols);
 
     for (size_t i = 0; i < mat1->rows; i++)

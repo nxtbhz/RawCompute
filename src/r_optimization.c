@@ -1,5 +1,10 @@
 #include <rc/r_optimization.h>
 
+static int has_same_shape(const RNONNULL RMatrix *lhs, const RNONNULL RMatrix *rhs)
+{
+    return lhs->rows == rhs->rows && lhs->cols == rhs->cols;
+}
+
 /**
  * r_optimization_sgd() - Perform an SGD parameter update.
  * @theta: Parameter matrix updated in place.
@@ -11,6 +16,12 @@
  */
 void r_optimization_sgd(RNONNULL RMatrix *theta, const RNONNULL RMatrix *grad, float eta)
 {
+    if (!has_same_shape(theta, grad))
+    {
+        printf("[ERROR]: r_optimization_sgd requires theta and grad with matching shapes\n");
+        return;
+    }
+
     const size_t count = MatrixSize(theta);
     for (size_t i = 0; i < count; i++)
     {
@@ -33,6 +44,12 @@ void r_optimization_sgd(RNONNULL RMatrix *theta, const RNONNULL RMatrix *grad, f
 void r_optimization_sgdm(RNONNULL RMatrix *theta, const RNONNULL RMatrix *grad, RNONNULL RMatrix *velocity, float eta,
                          float beta)
 {
+    if (!has_same_shape(theta, grad) || !has_same_shape(theta, velocity))
+    {
+        printf("[ERROR]: r_optimization_sgdm requires theta, grad and velocity with matching shapes\n");
+        return;
+    }
+
     const size_t count = MatrixSize(theta);
     for (size_t i = 0; i < count; i++)
     {
@@ -57,6 +74,12 @@ void r_optimization_sgdm(RNONNULL RMatrix *theta, const RNONNULL RMatrix *grad, 
 void r_optimization_rmsprop(RNONNULL RMatrix *theta, const RNONNULL RMatrix *grad, RNONNULL RMatrix *cache, float eta,
                             float rho, float eps)
 {
+    if (!has_same_shape(theta, grad) || !has_same_shape(theta, cache))
+    {
+        printf("[ERROR]: r_optimization_rmsprop requires theta, grad and cache with matching shapes\n");
+        return;
+    }
+
     const size_t count = MatrixSize(theta);
     for (size_t i = 0; i < count; i++)
     {
@@ -85,6 +108,12 @@ void r_optimization_rmsprop(RNONNULL RMatrix *theta, const RNONNULL RMatrix *gra
 void r_optimization_adam(RNONNULL RMatrix *theta, const RNONNULL RMatrix *grad, RNONNULL RMatrix *m,
                          RNONNULL RMatrix *v, float eta, float beta1, float beta2, float eps, size_t t)
 {
+    if (!has_same_shape(theta, grad) || !has_same_shape(theta, m) || !has_same_shape(theta, v))
+    {
+        printf("[ERROR]: r_optimization_adam requires theta, grad, m and v with matching shapes\n");
+        return;
+    }
+
     float beta1_t = 1.0f - powf(beta1, (float)t);
     float beta2_t = 1.0f - powf(beta2, (float)t);
 

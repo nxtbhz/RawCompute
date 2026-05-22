@@ -1,5 +1,25 @@
 #include <rc/r_loss.h>
 
+static int has_same_shape(const RNONNULL RMatrix *lhs, const RNONNULL RMatrix *rhs)
+{
+    return lhs->rows == rhs->rows && lhs->cols == rhs->cols;
+}
+
+static int validate_loss_inputs(const RNONNULL RMatrix *pred, const RNONNULL RMatrix *real, const char *name)
+{
+    if (!has_same_shape(pred, real))
+    {
+        printf("[ERROR]: %s requires prediction and target matrices with matching shapes\n", name);
+        return 0;
+    }
+    if (pred->rows == 0 || pred->cols == 0)
+    {
+        printf("[ERROR]: %s does not accept empty matrices\n", name);
+        return 0;
+    }
+    return 1;
+}
+
 /**
  * r_cross_entropy() - Compute cross-entropy loss.
  * @matrix: Predicted probabilities.
@@ -11,6 +31,9 @@
  */
 float r_cross_entropy(const RNONNULL RMatrix *matrix, const RNONNULL RMatrix *src)
 {
+    if (!validate_loss_inputs(matrix, src, "r_cross_entropy"))
+        return NAN;
+
     float total = 0.0f;
     const size_t count = MatrixSize(matrix);
     for (size_t i = 0; i < count; i++)
@@ -34,6 +57,9 @@ float r_cross_entropy(const RNONNULL RMatrix *matrix, const RNONNULL RMatrix *sr
  */
 float r_bin_cross_entropy(const RNONNULL RMatrix *pred, const RNONNULL RMatrix *real)
 {
+    if (!validate_loss_inputs(pred, real, "r_bin_cross_entropy"))
+        return NAN;
+
     float total = 0.0f;
     const size_t count = MatrixSize(real);
     for (size_t i = 0; i < count; i++)
@@ -57,6 +83,9 @@ float r_bin_cross_entropy(const RNONNULL RMatrix *pred, const RNONNULL RMatrix *
  */
 float r_cat_cross_entropy(const RNONNULL RMatrix *pred, const RNONNULL RMatrix *real)
 {
+    if (!validate_loss_inputs(pred, real, "r_cat_cross_entropy"))
+        return NAN;
+
     float total = 0.0f;
     const size_t count = MatrixSize(real);
     for (size_t i = 0; i < count; i++)
@@ -79,6 +108,9 @@ float r_cat_cross_entropy(const RNONNULL RMatrix *pred, const RNONNULL RMatrix *
  */
 float r_mse_loss(const RNONNULL RMatrix *pred, const RNONNULL RMatrix *real)
 {
+    if (!validate_loss_inputs(pred, real, "r_mse_loss"))
+        return NAN;
+
     float result = 0.0f;
     const size_t count = MatrixSize(real);
     for (size_t i = 0; i < count; i++)
@@ -100,6 +132,9 @@ float r_mse_loss(const RNONNULL RMatrix *pred, const RNONNULL RMatrix *real)
  */
 float r_mae_loss(const RNONNULL RMatrix *pred, const RNONNULL RMatrix *real)
 {
+    if (!validate_loss_inputs(pred, real, "r_mae_loss"))
+        return NAN;
+
     float result = 0.0f;
     const size_t count = MatrixSize(real);
     for (size_t i = 0; i < count; i++)
@@ -124,6 +159,9 @@ float r_mae_loss(const RNONNULL RMatrix *pred, const RNONNULL RMatrix *real)
  */
 float r_bin_focal_loss(const RNONNULL RMatrix *pred, const RNONNULL RMatrix *real, float gamma, float alpha)
 {
+    if (!validate_loss_inputs(pred, real, "r_bin_focal_loss"))
+        return NAN;
+
     float total = 0.0f;
     const size_t count = MatrixSize(real);
     for (size_t i = 0; i < count; i++)
@@ -153,6 +191,9 @@ float r_bin_focal_loss(const RNONNULL RMatrix *pred, const RNONNULL RMatrix *rea
  */
 float r_cat_focal_loss(const RNONNULL RMatrix *pred, const RNONNULL RMatrix *real, float gamma)
 {
+    if (!validate_loss_inputs(pred, real, "r_cat_focal_loss"))
+        return NAN;
+
     float total = 0.0f;
     const size_t count = MatrixSize(real);
     for (size_t i = 0; i < count; i++)
